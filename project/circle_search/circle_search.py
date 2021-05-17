@@ -75,7 +75,7 @@ if __name__ == "__main__":
     img_contours = image_prc(img)
     pred_lose = hough_search(img_contours)
     print(f"pred_lose: {pred_lose}")
-    path = "E:/PycharmProjects/KP/project/circles_generate/radius_true"
+    path = "E:/PycharmProjects/KP/project/circles_generate/diameter_true"
     y_true = data_get(path)
     print(f"y_true: {y_true}")
 

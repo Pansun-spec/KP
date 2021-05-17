@@ -68,7 +68,7 @@ if __name__ == "__main__":
     cv2.imwrite("E://PycharmProjects//KP//project//circle_search//for_search.jpg", dst)
 
 
-    name = 'radius_true'
+    name = 'diameter_true'
     data_save(name, list_random_diameter)
 
 
