@@ -41,25 +41,36 @@ def img_bitwise(image):
     dst = cv2.add(img_bg, img_fg)
     return dst
 
+def data_save(name, list):
+    list.sort()
+    f = open(name, mode='w')
+    dets = np.array(list)
+    for i in dets:
+        print(int(i), end=' ', file=f)
 
 if __name__ == "__main__":
     background_720p = cv2.imread('720p.jpg')
     bg_circle = cv2.imread('BG.jpg')
     circle_pos = []
-    list_radius = [10, 15, 25, 35, 45, 50, 55, 60, 70, 80, 90, 100]   # Используются сверла диаметром: 2, 3, 5, 7, 9, 10, 11, 12, 14, 16, 18, 20
-    list_random_radius = []
-    idxs = np.random.randint(0, len(list_radius), size=random.randint(4, 6))    # 4 - 6 random holes
+    list_giameter = [20, 30, 50, 70, 90, 100, 110, 120, 140, 160, 180, 200]   # Используются сверла диаметром: 2, 3, 5, 7, 9, 10, 11, 12, 14, 16, 18, 20
+    list_random_diameter = []
+    idxs = np.random.randint(0, len(list_giameter), size=random.randint(4, 6))    # 4 - 6 random holes
     for i in idxs:
-        list_random_radius.append(
-            list_radius[i])
-    print(list_random_radius)
-    # print(idxs[:])
-    # radius = random.choice(list_radius)
-    for radius in list_random_radius:
+        list_random_diameter.append(
+            list_giameter[i])
+
+    for radius in list_random_diameter:
         rand = RandomCircle(r=radius)
 
     img = rand.img
     dst = img_bitwise(img)
-    cv_show(dst)
+    cv_show('res', dst)
     cv2.imwrite("E://PycharmProjects//KP//project//circle_search//for_search.jpg", dst)
+
+
+    name = 'radius_true'
+    data_save(name, list_random_diameter)
+
+
+
 
