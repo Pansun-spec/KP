@@ -65,12 +65,11 @@ if __name__ == "__main__":
     img = rand.img
     dst = img_bitwise(img)
     cv_show('res', dst)
-    cv2.imwrite("E://PycharmProjects//KP//project//circle_search//for_search.jpg", dst)
+    cv2.imwrite("/home/kehua/PycharmProjects/KP/project/circle_search/for_search.jpg", dst)
 
 
     name = 'diameter_true'
     data_save(name, list_random_diameter)
-
 
 
 
