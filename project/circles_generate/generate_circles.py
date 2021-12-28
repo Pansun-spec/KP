@@ -30,6 +30,7 @@ class RandomCircle(object):
             y = np.random.randint(self.radius, background.shape[0] - self.radius)
         circle_pos.append((x, y, self.radius))  # add coord into list
         img = cv2.circle(background, (x, y), self.radius, (255, 255, 255), -1)  # draw circles (BGR)
+        np.savetxt("circles_pos.txt", circle_pos, fmt='%d', delimiter=',')
         return img
 
 def img_bitwise(image):
@@ -49,7 +50,7 @@ def data_save(name, list):
         print(int(i), end=' ', file=f)
 
 if __name__ == "__main__":
-    background_720p = cv2.imread('720p.jpg')
+    background_720p = cv2.imread('/home/kehua/PycharmProjects/KP/project/image_size/720pam.jpg')
     bg_circle = cv2.imread('BG.jpg')
     circle_pos = []
     list_giameter = [20, 30, 50, 70, 90, 100, 110, 120, 140, 160, 180, 200]   # Используются сверла диаметром: 2, 3, 5, 7, 9, 10, 11, 12, 14, 16, 18, 20
@@ -70,6 +71,3 @@ if __name__ == "__main__":
 
     name = 'diameter_true'
     data_save(name, list_random_diameter)
-
-
-

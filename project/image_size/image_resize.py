@@ -8,7 +8,7 @@ def img_resize(image):
     img_new = cv2.resize(image, (width_new, int(height * width_new / width)))
     return img_new
 
-img = cv2.imread('540p.jpg')
+img = cv2.imread('/home/kehua/PycharmProjects/KP/project/colors/Американский орех.jpg')
 img_new = img_resize(img)
 print(img.shape)
 print(img_new.shape)
