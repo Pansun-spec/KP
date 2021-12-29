@@ -50,7 +50,7 @@ def data_save(name, list):
         print(int(i), end=' ', file=f)
 
 if __name__ == "__main__":
-    background_720p = cv2.imread('/home/kehua/PycharmProjects/KP/project/image_size/720pam.jpg')
+    background_720p = cv2.imread('/home/kehua/PycharmProjects/KP/project/image_size/720p.jpg')
     bg_circle = cv2.imread('BG.jpg')
     circle_pos = []
     list_giameter = [20, 30, 50, 70, 90, 100, 110, 120, 140, 160, 180, 200]   # Используются сверла диаметром: 2, 3, 5, 7, 9, 10, 11, 12, 14, 16, 18, 20
@@ -64,6 +64,7 @@ if __name__ == "__main__":
         rand = RandomCircle(r=radius)
 
     img = rand.img
+    #cv2.imwrite('/home/kehua/PycharmProjects/KP/project/circle_search/for_search.jpg', img)
     dst = img_bitwise(img)
     cv_show('res', dst)
     cv2.imwrite("/home/kehua/PycharmProjects/KP/project/circle_search/for_search.jpg", dst)

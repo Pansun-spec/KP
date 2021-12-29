@@ -25,9 +25,9 @@ def image_prc(image):
     cv_show('img_gau_blur', img_gau_blur)
     img_gray = cv2.cvtColor(img_gau_blur, cv2.COLOR_BGR2GRAY)  # Преобразовать изображение в полутоновое
     cv_show('img_gary', img_gray)
-    img_blur = cv2.blur(img_gau_blur, (4, 4))  # Сгладить
+    img_blur = cv2.blur(img_gau_blur, (6, 6))  # Сгладить
 
-    img_canny = cv2.Canny(img_blur, 50, 150)    # Применить детектор границ Canny
+    img_canny = cv2.Canny(img_blur, 50, 150)  # Применить детектор границ Canny
     cv_show('canny', img_canny)
     kernel = np.ones((3, 3), np.uint8)
     closing = cv2.morphologyEx(img_canny, cv2.MORPH_GRADIENT, kernel)  # Morphological Gradient
@@ -46,7 +46,7 @@ def image_prc(image):
 
 
 def hough_search(image):
-    circles = cv2.HoughCircles(image, cv2.HOUGH_GRADIENT, 1, 200, 255, 255, 18, 0)
+    circles = cv2.HoughCircles(image, cv2.HOUGH_GRADIENT, 1, 200, 255, 255, 17, 0)
     # dp, minDist, param1_Canny threshold, param2 center threshold, minr, maxr
     circles = np.uint16(np.around(circles))
 
@@ -90,6 +90,7 @@ def found_hole_percent(len_pred, len_true):
         found_hole_percent = len_true / len_pred
     print(f"found_hole_percent: {found_hole_percent}")  # how many circles have been found?
 
+
 def data_proc(y_pred, y_true):
     y_pred_r = [0, 0, 0, 0, 0, 0]
     for i in range(0, len(y_pred)):
@@ -104,20 +105,34 @@ def data_proc(y_pred, y_true):
             else:
                 smaller_r = min(y_pred_r[list_distance.index(min(list_distance))], y_pred[i][2])
                 y_pred_r[list_distance.index(min(list_distance))] = smaller_r
-    count = 0
-    for m in range(0, len(y_pred_r)):
-        if y_pred_r[m] == 0:
-            count = count + 1
-    for n in range(0, count):
-        y_pred_r.remove(0)
-    print(f"y_pred_r: {y_pred_r}")
 
     # find the y_true diameter
     y_true_r = []
     for i in range(0, len(y_true)):
         y_true_r.append(y_true[i][2])
+    #   print(f"y_true_r: {y_true_r}")
+
+    count1 = 0
+    for m in range(0, len(y_pred_r)):
+        if y_pred_r[m] == 0:
+            count1 = count1 + 1
+    for n in range(0, count1):
+        y_pred_r.remove(0)
+
+    len_pred = len(y_pred_r)
+    count2 = len(y_true_r)
+    if len_pred < count2:
+        diff = count2 - len_pred
+        for i in range(0, diff):
+            del y_true_r[count2-1]
+            count2 = count2 - 1
+
+
+    print(f"y_pred_r: {y_pred_r}")
     print(f"y_true_r: {y_true_r}")
+
     return y_true_r, y_pred_r
+
 
 if __name__ == "__main__":
     img = cv2.imread('for_search.jpg')
@@ -133,11 +148,13 @@ if __name__ == "__main__":
     y_pred = np.loadtxt(path_pred, delimiter=',')
     print(f"y_pred:\n {y_pred}")
 
-    len_pred = len(y_pred)
-    len_true = len(y_true)
-    found_hole_percent(len_pred, len_true)
-
     y_true_r, y_pred_r = data_proc(y_pred, y_true)
+
+    len_pred_r = len(y_pred_r)
+    len_true_r = len(y_true_r)
+
+    found_hole_percent(len_pred_r, len_true_r)
+
 
     # accuracy
     mean_squared_error = mean_squared_error(y_true_r, y_pred_r)
