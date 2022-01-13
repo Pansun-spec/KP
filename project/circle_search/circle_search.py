@@ -62,7 +62,7 @@ def hough_search(image):
         y_pred.append([i[0], i[1], i[2]])
         r_pred.append(round(i[2] / 10) * 10)
         r_pred.sort()
-        print(f"{count + 1}.({i[0]}, {i[1]}), d-detected: {i[2]}(pixel)")
+        print(f"{count + 1}.({i[0]}, {i[1]}), d-detected: {i[2]}")
         count += 1
         cv2.putText(img, f'{str(count)} radius={int(round(i[2] / 10) / 2 * 10)}mm ', (i[0], i[1]),
                     cv2.FONT_HERSHEY_COMPLEX, 0.4, (0, 0, 255), 1)
@@ -152,8 +152,8 @@ if __name__ == "__main__":
 
     len_pred_r = len(y_pred_r)
     len_true_r = len(y_true_r)
-
-    found_hole_percent(len_pred_r, len_true_r)
+    len_true = len(y_true)
+    found_hole_percent(len_pred_r, len_true)
 
 
     # accuracy
