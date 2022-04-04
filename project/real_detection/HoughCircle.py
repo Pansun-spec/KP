@@ -1,6 +1,8 @@
 import sys
 import numpy as np
 import cv2 as cv
+from skimage.io import imread, imsave
+
 
 def cv_show(name, image):
     cv.namedWindow(name, cv.WINDOW_NORMAL)
@@ -9,7 +11,7 @@ def cv_show(name, image):
     cv.destroyAllWindows()
 
 def main(argv):
-    default_file = 'res.jpg'
+    default_file = 'for_search.jpg'
     filename = argv[0] if len(argv) > 0 else default_file
     #Загрузка картинки
     src = cv.imread(cv.samples.findFile(filename), cv.IMREAD_COLOR)
@@ -60,14 +62,14 @@ def main(argv):
             # окружность
             radius = i[2]
             cv.circle(src, center, radius, (255, 0, 255), 3)
-            print(f"{count + 1}.({i[0]}, {i[1]}), diameter: {round(i[2] / 2)}")
+            print(f"{count + 1}.({i[0]}, {i[1]}), diameter: {round(i[2] / 5)}")
             count += 1
             # вывод текста
             # cv.putText(src, f'{str(count)} radius={int(i[2] /10 / 2 * 10)}', (i[0], i[1]),
             #       cv.FONT_HERSHEY_COMPLEX, 4, (0, 0, 255), 2)
 
     cv_show('detected circles', src)
-
+    imsave('res_normalHough', src)
     return 0
 
 if __name__ == "__main__":

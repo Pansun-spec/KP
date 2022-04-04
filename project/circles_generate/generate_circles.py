@@ -53,9 +53,9 @@ if __name__ == "__main__":
     background_720p = cv2.imread('/home/kehua/PycharmProjects/KP/project/image_size/720p.jpg')
     bg_circle = cv2.imread('BG.jpg')
     circle_pos = []
-    list_giameter = [20, 30, 50, 70, 90, 100, 110, 120, 140, 160, 180, 200]   # Используются сверла диаметром: 2, 3, 5, 7, 9, 10, 11, 12, 14, 16, 18, 20
+    list_giameter = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60]   # Используются сверла диаметром: 2, 3, 5, 7, 9, 10, 11, 12, 14, 16, 18, 20
     list_random_diameter = []
-    idxs = np.random.randint(0, len(list_giameter), size=random.randint(4, 6))    # 4 - 6 random holes
+    idxs = np.random.randint(0, len(list_giameter), size=random.randint(15, 20))    # 4 - 6 random holes
     for i in idxs:
         list_random_diameter.append(
             list_giameter[i])

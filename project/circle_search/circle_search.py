@@ -6,6 +6,7 @@ from sklearn.metrics import mean_squared_error
 
 
 def cv_show(name, image):
+    # cv2.namedWindow(name, WINDOW_NORMAL)
     cv2.imshow(name, image)
     cv2.waitKey(0)
     cv2.destroyAllWindows()
@@ -34,19 +35,19 @@ def image_prc(image):
     # cv_show('closing', closing)
 
     contours, hierarchy = cv2.findContours(closing, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)  # find contours
-    img_contours = cv2.drawContours(img_canny, contours, -1, (255, 255, 255), 2)  # draw contours
-    # cv_show('conts', img_contours)
+    #img_contours = cv2.drawContours(img_canny, contours, -1, (255, 255, 255), 2)  # draw contours
+    #cv_show('conts', img_contours)
 
     length = len(contours)
     # Залить замкнутые области
     for i in range(0, length):
-        cv2.fillPoly(img_contours, [contours[i]], (255, 255, 255))
-    cv_show('res', img_contours)
-    return img_contours
+        cv2.fillPoly(img_canny, [contours[i]], (255, 255, 255))
+    cv_show('res', img_canny)
+    return img_canny
 
 
 def hough_search(image):
-    circles = cv2.HoughCircles(image, cv2.HOUGH_GRADIENT, 1, 200, 255, 255, 17, 0)
+    circles = cv2.HoughCircles(image, cv2.HOUGH_GRADIENT, 1, 80, 20, 255, 2, 50)
     # dp, minDist, param1_Canny threshold, param2 center threshold, minr, maxr
     circles = np.uint16(np.around(circles))
 
